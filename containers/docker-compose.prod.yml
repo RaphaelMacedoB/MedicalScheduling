@@ -1,0 +1,53 @@
+services:
+
+  medical-api:
+    container_name: medical-api
+
+    build:
+      context: ..
+      dockerfile: src/MedicalScheduling.Presentation/Dockerfile
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=medical_scheduling;Username=postgres;Password=postgres
+
+      Redis__Connection: redis:6379
+
+      Jwt__Key: ${JWT_KEY}
+      Jwt__Issuer: ${JWT_ISSUER}
+      Jwt__Audience: ${JWT_AUDIENCE}
+
+    depends_on:
+      - postgres
+      - redis
+
+    restart: always
+
+  postgres:
+    image: postgres:16
+
+    container_name: medical-postgres
+
+    environment:
+      POSTGRES_DB: medical_scheduling
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    restart: always
+
+  redis:
+    image: redis:7
+
+    container_name: medical-redis
+
+    restart: always
+
+volumes:
+  postgres_data:
