@@ -19,6 +19,7 @@ public sealed class CreateDoctorHandlerTests
       _doctorRepository.Object,
       _specialityRepository.Object,
       _unitOfWork.Object,
+      new NullCacheService(),
       _mapper.Object);
 
   [Fact]

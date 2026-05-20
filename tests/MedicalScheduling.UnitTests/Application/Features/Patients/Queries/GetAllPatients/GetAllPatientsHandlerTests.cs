@@ -13,7 +13,7 @@ public sealed class GetAllPatientsHandlerTests
 
   public GetAllPatientsHandlerTests()
   {
-    _handler = new GetAllPatientsHandler(_repository.Object, MapperFactory.Create());
+    _handler = new GetAllPatientsHandler(_repository.Object, new NullCacheService(), MapperFactory.Create());
   }
 
   [Fact]

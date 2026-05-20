@@ -14,7 +14,7 @@ public sealed class DeactivatePatientHandlerTests
 
   public DeactivatePatientHandlerTests()
   {
-    _handler = new DeactivatePatientHandler(_repository.Object, _unitOfWork.Object);
+    _handler = new DeactivatePatientHandler(_repository.Object, _unitOfWork.Object, new NullCacheService());
   }
 
   [Fact]

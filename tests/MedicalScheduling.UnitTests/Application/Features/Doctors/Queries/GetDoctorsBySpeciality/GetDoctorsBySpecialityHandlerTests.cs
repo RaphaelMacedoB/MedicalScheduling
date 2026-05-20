@@ -17,6 +17,7 @@ public sealed class GetDoctorsBySpecialityHandlerTests
     _handler = new GetDoctorsBySpecialityHandler(
         _doctorRepository.Object,
         _specialityRepository.Object,
+        new NullCacheService(),
         MapperFactory.Create());
   }
 

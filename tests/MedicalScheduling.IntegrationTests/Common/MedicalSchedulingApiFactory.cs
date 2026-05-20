@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
+using Testcontainers.Redis;
 
 namespace MedicalScheduling.IntegrationTests.Common;
 
@@ -17,13 +18,19 @@ public sealed class MedicalSchedulingApiFactory : WebApplicationFactory<Program>
       .WithPassword("postgres")
       .Build();
 
+  private readonly RedisContainer _redis = new RedisBuilder("redis:7-alpine").Build();
+
   private bool _databaseInitialized;
 
-  public async Task InitializeAsync() => await _postgres.StartAsync();
+  public async Task InitializeAsync()
+  {
+    await Task.WhenAll(_postgres.StartAsync(), _redis.StartAsync());
+  }
 
   public new async Task DisposeAsync()
   {
     await _postgres.DisposeAsync();
+    await _redis.DisposeAsync();
     await base.DisposeAsync();
   }
 
@@ -35,7 +42,8 @@ public sealed class MedicalSchedulingApiFactory : WebApplicationFactory<Program>
     {
       config.AddInMemoryCollection(new Dictionary<string, string?>
       {
-        ["ConnectionStrings:DefaultConnection"] = _postgres.GetConnectionString()
+        ["ConnectionStrings:DefaultConnection"] = _postgres.GetConnectionString(),
+        ["ConnectionStrings:Redis"] = _redis.GetConnectionString()
       });
     });
   }

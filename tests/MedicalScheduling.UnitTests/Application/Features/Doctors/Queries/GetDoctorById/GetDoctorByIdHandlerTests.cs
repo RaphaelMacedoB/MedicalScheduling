@@ -13,7 +13,7 @@ public sealed class GetDoctorByIdHandlerTests
 
   public GetDoctorByIdHandlerTests()
   {
-    _handler = new GetDoctorByIdHandler(_repository.Object, MapperFactory.Create());
+    _handler = new GetDoctorByIdHandler(_repository.Object, new NullCacheService(), MapperFactory.Create());
   }
 
   [Fact]

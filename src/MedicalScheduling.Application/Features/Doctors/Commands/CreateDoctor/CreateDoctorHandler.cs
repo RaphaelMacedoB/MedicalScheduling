@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using MedicalScheduling.Application.Abstractions.Caching;
 using MedicalScheduling.Application.Features.Doctors.DTOs;
 using MedicalScheduling.Domain;
 using MedicalScheduling.Domain.Primitives;
@@ -11,17 +12,20 @@ public sealed class CreateDoctorHandler : IRequestHandler<CreateDoctorCommand, R
   private readonly IDoctorRepository _doctorRepository;
   private readonly ISpecialityRepository _specialityRepository;
   private readonly IUnitOfWork _uow;
+  private readonly ICacheService _cache;
   private readonly IMapper _mapper;
 
   public CreateDoctorHandler(
       IDoctorRepository doctorRepository,
       ISpecialityRepository specialityRepository,
       IUnitOfWork uow,
+      ICacheService cache,
       IMapper mapper)
   {
     _doctorRepository = doctorRepository;
     _specialityRepository = specialityRepository;
     _uow = uow;
+    _cache = cache;
     _mapper = mapper;
   }
 
@@ -47,6 +51,7 @@ public sealed class CreateDoctorHandler : IRequestHandler<CreateDoctorCommand, R
 
     await _doctorRepository.AddAsync(result.Value, ct);
     await _uow.SaveChangesAsync(ct);
+    await _cache.RemoveAsync(CacheKeys.Doctors.BySpeciality(request.SpecialityId), ct);
 
     return Result.Success(_mapper.Map<DoctorDto>(result.Value));
   }

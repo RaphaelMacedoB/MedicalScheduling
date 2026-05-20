@@ -2,6 +2,7 @@ namespace MedicalScheduling.Application.Features.Specialities.Commands.CreateSpe
 
 using AutoMapper;
 using MediatR;
+using MedicalScheduling.Application.Abstractions.Caching;
 using MedicalScheduling.Application.Features.Specialities.DTOs;
 using MedicalScheduling.Domain;
 using MedicalScheduling.Domain.Primitives;
@@ -10,12 +11,18 @@ public sealed class CreateSpecialityHandler : IRequestHandler<CreateSpecialityCo
 {
   private readonly ISpecialityRepository _repository;
   private readonly IUnitOfWork _uow;
+  private readonly ICacheService _cache;
   private readonly IMapper _mapper;
 
-  public CreateSpecialityHandler(ISpecialityRepository repository, IUnitOfWork uow, IMapper mapper)
+  public CreateSpecialityHandler(
+      ISpecialityRepository repository,
+      IUnitOfWork uow,
+      ICacheService cache,
+      IMapper mapper)
   {
     _repository = repository;
     _uow = uow;
+    _cache = cache;
     _mapper = mapper;
   }
 
@@ -31,6 +38,7 @@ public sealed class CreateSpecialityHandler : IRequestHandler<CreateSpecialityCo
 
     await _repository.AddAsync(result.Value, ct);
     await _uow.SaveChangesAsync(ct);
+    await _cache.RemoveAsync(CacheKeys.Specialities.All, ct);
 
     return Result.Success(_mapper.Map<SpecialityDto>(result.Value));
   }

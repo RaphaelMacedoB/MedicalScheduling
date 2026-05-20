@@ -13,7 +13,7 @@ public sealed class GetAllSpecialitiesHandlerTests
 
   public GetAllSpecialitiesHandlerTests()
   {
-    _handler = new GetAllSpecialitiesHandler(_repository.Object, MapperFactory.Create());
+    _handler = new GetAllSpecialitiesHandler(_repository.Object, new NullCacheService(), MapperFactory.Create());
   }
 
   [Fact]

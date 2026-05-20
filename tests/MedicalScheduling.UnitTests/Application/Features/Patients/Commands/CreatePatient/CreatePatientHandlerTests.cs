@@ -17,6 +17,7 @@ public sealed class CreatePatientHandlerTests
     _handler = new CreatePatientHandler(
         _repository.Object,
         _unitOfWork.Object,
+        new NullCacheService(),
         MapperFactory.Create());
   }
 

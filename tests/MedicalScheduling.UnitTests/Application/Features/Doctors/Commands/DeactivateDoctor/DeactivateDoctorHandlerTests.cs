@@ -14,7 +14,7 @@ public sealed class DeactivateDoctorHandlerTests
 
   public DeactivateDoctorHandlerTests()
   {
-    _handler = new DeactivateDoctorHandler(_repository.Object, _unitOfWork.Object);
+    _handler = new DeactivateDoctorHandler(_repository.Object, _unitOfWork.Object, new NullCacheService());
   }
 
   [Fact]

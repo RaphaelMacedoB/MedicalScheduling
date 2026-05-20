@@ -17,6 +17,7 @@ public sealed class UpdateSpecialityHandlerTests
     _handler = new UpdateSpecialityHandler(
         _repository.Object,
         _unitOfWork.Object,
+        new NullCacheService(),
         MapperFactory.Create());
   }
 
