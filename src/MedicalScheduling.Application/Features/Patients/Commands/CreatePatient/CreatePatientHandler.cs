@@ -1,0 +1,48 @@
+using AutoMapper;
+using MediatR;
+using MedicalScheduling.Application.Features.Patients.DTOs;
+using MedicalScheduling.Domain;
+using MedicalScheduling.Domain.Primitives;
+using MedicalScheduling.Domain.Repositories;
+using MedicalScheduling.Infrastructure;
+
+namespace MedicalScheduling.Application.Features.Patients.Commands.CreatePatient;
+
+public sealed class CreatePatientHandler : IRequestHandler<CreatePatientCommand, Result<PatientDto>>
+{
+  private readonly IPatientRepository _repository;
+  private readonly IUnitOfWork _uow;
+  private readonly IMapper _mapper;
+
+  public CreatePatientHandler(
+      IPatientRepository repository,
+      IUnitOfWork uow,
+      IMapper mapper)
+  {
+    _repository = repository;
+    _uow = uow;
+    _mapper = mapper;
+  }
+
+  public async Task<Result<PatientDto>> Handle(CreatePatientCommand request, CancellationToken ct)
+  {
+    var exists = await _repository.ExistsByCpfAsync(request.Cpf, ct);
+    if (exists)
+      return Result.Failure<PatientDto>(DomainErrors.Patient.InvalidCpf);
+
+    var result = Patient.Create(
+        request.Name,
+        request.Email,
+        request.Cpf,
+        request.Phone,
+        request.BirthDate);
+
+    if (result.IsFailure)
+      return Result.Failure<PatientDto>(result.Error);
+
+    await _repository.AddAsync(result.Value, ct);
+    await _uow.SaveChangesAsync(ct);
+
+    return Result.Success(_mapper.Map<PatientDto>(result.Value));
+  }
+}
