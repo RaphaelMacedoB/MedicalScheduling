@@ -4,7 +4,7 @@ A modern medical scheduling backend built with .NET 8 using Clean Architecture a
 
 ## Technologies
 
-- .NET 8
+- .NET 10
 - ASP.NET Core Minimal API
 - Entity Framework Core
 - PostgreSQL
