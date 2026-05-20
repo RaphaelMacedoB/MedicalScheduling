@@ -1,0 +1,17 @@
+namespace MedicalScheduling.Application.Features.Specialities.Commands.CreateSpeciality;
+
+using FluentValidation;
+
+public sealed class CreateSpecialtyValidator : AbstractValidator<CreateSpecialtyCommand>
+{
+  public CreateSpecialtyValidator()
+  {
+    RuleFor(x => x.Name)
+        .NotEmpty().WithMessage("Nome é obrigatório")
+        .MaximumLength(100).WithMessage("Nome deve ter no máximo 100 caracteres");
+
+    RuleFor(x => x.Description)
+        .MaximumLength(500).WithMessage("Descrição deve ter no máximo 500 caracteres")
+        .When(x => x.Description is not null);
+  }
+}

@@ -1,10 +1,11 @@
+namespace MedicalScheduling.Application.Features.Doctors.Queries.GetDoctorById;
+
 using AutoMapper;
 using MediatR;
 using MedicalScheduling.Application.Features.Doctors.DTOs;
 using MedicalScheduling.Domain.Primitives;
 using MedicalScheduling.Domain.Repositories;
 
-namespace MedicalScheduling.Application.Features.Doctors.Queries.GetDoctorById;
 
 public sealed class GetDoctorByIdHandler : IRequestHandler<GetDoctorByIdQuery, Result<DoctorDto>>
 {

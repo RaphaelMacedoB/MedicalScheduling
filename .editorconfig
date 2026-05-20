@@ -1,0 +1,7 @@
+[*.cs]
+
+# Ordena using automaticamente
+dotnet_sort_system_directives_first = true
+
+# Remove usings não usados ao salvar
+dotnet_remove_unnecessary_imports = true
