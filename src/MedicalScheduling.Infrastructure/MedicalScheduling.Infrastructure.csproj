@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\MedicalScheduling.Application\MedicalScheduling.Application.csproj" />
     <ProjectReference Include="..\MedicalScheduling.Domain\MedicalScheduling.Domain.csproj" />
   </ItemGroup>
 

@@ -4,7 +4,7 @@ using MedicalScheduling.Domain.Primitives;
 
 public sealed class Speciality : Entity
 {
-  public string Name { get; private set; }
+  public string Name { get; private set; } = null!;
   public string? Description { get; private set; }
 
   private readonly List<Doctor> _doctors = [];

@@ -7,12 +7,12 @@ namespace MedicalScheduling.Domain;
 public sealed class Appointment : Entity
 {
   public Guid PatientId { get; private set; }
-  public Patient Patient { get; private set; }
+  public Patient Patient { get; private set; } = null!;
 
   public Guid DoctorId { get; private set; }
-  public Doctor Doctor { get; private set; }
+  public Doctor Doctor { get; private set; } = null!;
 
-  public TimeSlot TimeSlot { get; private set; }
+  public TimeSlot TimeSlot { get; private set; } = null!;
   public EAppointmentStatus Status { get; private set; }
   public string? Notes { get; private set; }
 
