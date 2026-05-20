@@ -1,3 +1,5 @@
+namespace MedicalScheduling.Application.Features.Appointments.DTOs;
+
 public sealed record AppointmentDto(
     Guid Id,
     Guid PatientId,

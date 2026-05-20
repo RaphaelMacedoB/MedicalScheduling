@@ -1,4 +1,5 @@
 using MediatR;
+using MedicalScheduling.Application.Features.Appointments.DTOs;
 using MedicalScheduling.Domain.Primitives;
 
 namespace MedicalScheduling.Application.Features.Appointments.ScheduleAppointment;

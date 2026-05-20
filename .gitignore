@@ -32,3 +32,13 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Frontend build
+dist/

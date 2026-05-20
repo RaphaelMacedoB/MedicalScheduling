@@ -8,7 +8,7 @@ public sealed class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<App
 {
   public AppDbContext CreateDbContext(string[] args)
   {
-    var basePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "MedicalScheduling.Presentation");
+    var basePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "MedicalScheduling.Presentation", "WebAPI");
 
     var configuration = new ConfigurationBuilder()
         .SetBasePath(basePath)

@@ -1,9 +1,10 @@
 using System.Net;
 using System.Net.Http.Json;
+using MedicalScheduling.Application.Common.Pagination;
 using MedicalScheduling.Application.Features.Doctors.Commands.CreateDoctor;
 using MedicalScheduling.Application.Features.Doctors.DTOs;
 using MedicalScheduling.IntegrationTests.Common;
-using MedicalScheduling.Presentation.Constants;
+using MedicalScheduling.Presentation.WebAPI.Constants;
 
 namespace MedicalScheduling.IntegrationTests.Doctors;
 
@@ -53,8 +54,8 @@ public sealed class DoctorsEndpointsTests : IntegrationTestBase
     var response = await Client.GetAsync($"{ApiRoutes.Doctors.Base}/speciality/{speciality.Id}");
 
     response.StatusCode.Should().Be(HttpStatusCode.OK);
-    var doctors = await response.ReadAsAsync<IEnumerable<DoctorDto>>();
-    doctors.Should().NotBeEmpty();
+    var page = await response.ReadAsAsync<PagedResponse<DoctorDto>>();
+    page.Items.Should().NotBeEmpty();
   }
 
   [Fact]

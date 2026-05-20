@@ -5,7 +5,7 @@ using MedicalScheduling.Application.Features.Specialities.Commands.CreateSpecial
 using MedicalScheduling.Application.Features.Specialities.DTOs;
 using MedicalScheduling.Application.Features.Doctors.Commands.CreateDoctor;
 using MedicalScheduling.Application.Features.Doctors.DTOs;
-using MedicalScheduling.Presentation.Constants;
+using MedicalScheduling.Presentation.WebAPI.Constants;
 
 namespace MedicalScheduling.IntegrationTests.Common;
 

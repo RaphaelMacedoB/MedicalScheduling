@@ -27,7 +27,6 @@ public sealed class DeactivateDoctorHandler : IRequestHandler<DeactivateDoctorCo
     _repository.Update(doctor);
     await _uow.SaveChangesAsync(ct);
     await _cache.RemoveAsync(CacheKeys.Doctors.ById(request.Id), ct);
-    await _cache.RemoveAsync(CacheKeys.Doctors.BySpeciality(doctor.SpecialityId), ct);
 
     return Result.Success();
   }

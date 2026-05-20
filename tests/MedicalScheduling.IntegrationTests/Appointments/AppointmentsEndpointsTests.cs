@@ -2,10 +2,12 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using MedicalScheduling.Application.Common.Pagination;
+using MedicalScheduling.Application.Features.Appointments.DTOs;
 using MedicalScheduling.Application.Features.Appointments.ScheduleAppointment;
 using MedicalScheduling.Domain.Primitives;
 using MedicalScheduling.IntegrationTests.Common;
-using MedicalScheduling.Presentation.Constants;
+using MedicalScheduling.Presentation.WebAPI.Constants;
 
 namespace MedicalScheduling.IntegrationTests.Appointments;
 
@@ -67,8 +69,8 @@ public sealed class AppointmentsEndpointsTests : IntegrationTestBase
     var response = await Client.GetAsync($"{ApiRoutes.Appointments.Base}/doctor/{doctorId}");
 
     response.StatusCode.Should().Be(HttpStatusCode.OK);
-    var appointments = await response.ReadAsAsync<IEnumerable<AppointmentDto>>();
-    appointments.Should().NotBeEmpty();
+    var page = await response.ReadAsAsync<PagedResponse<AppointmentDto>>();
+    page.Items.Should().NotBeEmpty();
   }
 
   [Fact]
@@ -83,8 +85,8 @@ public sealed class AppointmentsEndpointsTests : IntegrationTestBase
     var response = await Client.GetAsync($"{ApiRoutes.Appointments.Base}/patient/{patientId}");
 
     response.StatusCode.Should().Be(HttpStatusCode.OK);
-    var appointments = await response.ReadAsAsync<IEnumerable<AppointmentDto>>();
-    appointments.Should().NotBeEmpty();
+    var page = await response.ReadAsAsync<PagedResponse<AppointmentDto>>();
+    page.Items.Should().NotBeEmpty();
   }
 
   [Fact]

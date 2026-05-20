@@ -77,11 +77,8 @@ Contains:
 ## Presentation
 
 Contains:
-- Minimal APIs
-- Endpoints
-- Middlewares
-- Dependency Injection
-- Swagger
+- **WebAPI** (`src/MedicalScheduling.Presentation/WebAPI`) — ASP.NET Core controllers, Swagger, CORS
+- **Frontend** (`src/MedicalScheduling.Presentation/Frontend`) — React + Vite SPA with paginated lists and filters
 
 ---
 
@@ -107,6 +104,8 @@ src
  ├── MedicalScheduling.Application
  ├── MedicalScheduling.Infrastructure
  └── MedicalScheduling.Presentation
+      ├── WebAPI
+      └── Frontend
 ```
 
 ---
@@ -145,11 +144,23 @@ docker compose up -d
 
 ---
 
-# Run API
+# Run API + Frontend (one command)
+
+Requires [Make](https://www.gnu.org/software/make/) (Git Bash, WSL, or `choco install make` on Windows).
 
 ```bash
-cd MedicalScheduling.Presentation
-dotnet run
+make install   # first time only
+make dev       # Postgres + Redis + API + Frontend
+```
+
+- API / Swagger: http://localhost:5263/swagger  
+- Frontend: http://localhost:5173  
+
+Or run separately:
+
+```bash
+make run-api
+make run-frontend
 ```
 
 ---
@@ -161,7 +172,7 @@ dotnet run
 ```bash
 dotnet ef migrations add InitialCreate \
 --project MedicalScheduling.Infrastructure \
---startup-project MedicalScheduling.Presentation
+--startup-project MedicalScheduling.Presentation/WebAPI
 ```
 
 ---
@@ -171,7 +182,7 @@ dotnet ef migrations add InitialCreate \
 ```bash
 dotnet ef database update \
 --project MedicalScheduling.Infrastructure \
---startup-project MedicalScheduling.Presentation
+--startup-project MedicalScheduling.Presentation/WebAPI
 ```
 
 ---

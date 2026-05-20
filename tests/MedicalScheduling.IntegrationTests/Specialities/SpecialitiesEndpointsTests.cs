@@ -1,10 +1,11 @@
 using System.Net;
 using System.Net.Http.Json;
+using MedicalScheduling.Application.Common.Pagination;
 using MedicalScheduling.Application.Features.Specialities.Commands.CreateSpeciality;
 using MedicalScheduling.Application.Features.Specialities.Commands.UpdateSpeciality;
 using MedicalScheduling.Application.Features.Specialities.DTOs;
 using MedicalScheduling.IntegrationTests.Common;
-using MedicalScheduling.Presentation.Constants;
+using MedicalScheduling.Presentation.WebAPI.Constants;
 
 namespace MedicalScheduling.IntegrationTests.Specialities;
 
@@ -14,13 +15,14 @@ public sealed class SpecialitiesEndpointsTests : IntegrationTestBase
   public SpecialitiesEndpointsTests(MedicalSchedulingApiFactory factory) : base(factory) { }
 
   [Fact]
-  public async Task GetAll_ShouldReturnOk()
+  public async Task GetSpecialities_ShouldReturnPagedResult()
   {
-    var response = await Client.GetAsync(ApiRoutes.Specialities.Base);
+    var response = await Client.GetAsync($"{ApiRoutes.Specialities.Base}?page=1&pageSize=10");
 
     response.StatusCode.Should().Be(HttpStatusCode.OK);
-    var specialities = await response.ReadAsAsync<IEnumerable<SpecialityDto>>();
-    specialities.Should().NotBeNull();
+    var page = await response.ReadAsAsync<PagedResponse<SpecialityDto>>();
+    page.Items.Should().NotBeNull();
+    page.CurrentPage.Should().Be(1);
   }
 
   [Fact]

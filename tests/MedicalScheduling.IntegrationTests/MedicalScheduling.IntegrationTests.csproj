@@ -29,7 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MedicalScheduling.Application\MedicalScheduling.Application.csproj" />
     <ProjectReference Include="..\..\src\MedicalScheduling.Infrastructure\MedicalScheduling.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\src\MedicalScheduling.Presentation\MedicalScheduling.Presentation.csproj" />
+    <ProjectReference Include="..\..\src\MedicalScheduling.Presentation\WebAPI\MedicalScheduling.Presentation.WebAPI.csproj" />
   </ItemGroup>
 
 </Project>

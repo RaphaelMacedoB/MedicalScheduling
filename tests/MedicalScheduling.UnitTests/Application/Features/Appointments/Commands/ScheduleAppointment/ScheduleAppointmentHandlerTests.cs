@@ -1,5 +1,6 @@
 using MedicalScheduling.Domain;
 using AutoMapper;
+using MedicalScheduling.Application.Features.Appointments.DTOs;
 using MedicalScheduling.Application.Features.Appointments.ScheduleAppointment;
 using MedicalScheduling.Domain.Repositories;
 using MedicalScheduling.UnitTests.Common;

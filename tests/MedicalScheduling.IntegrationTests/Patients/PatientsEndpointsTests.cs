@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using MedicalScheduling.Application.Features.Patients.Commands.CreatePatient;
 using MedicalScheduling.Application.Features.Patients.DTOs;
 using MedicalScheduling.IntegrationTests.Common;
-using MedicalScheduling.Presentation.Constants;
+using MedicalScheduling.Presentation.WebAPI.Constants;
 
 namespace MedicalScheduling.IntegrationTests.Patients;
 
@@ -13,9 +13,9 @@ public sealed class PatientsEndpointsTests : IntegrationTestBase
   public PatientsEndpointsTests(MedicalSchedulingApiFactory factory) : base(factory) { }
 
   [Fact]
-  public async Task GetAll_ShouldReturnOk()
+  public async Task GetPatients_ShouldReturnPagedResult()
   {
-    var response = await Client.GetAsync(ApiRoutes.Patients.Base);
+    var response = await Client.GetAsync($"{ApiRoutes.Patients.Base}?page=1&pageSize=10");
 
     response.StatusCode.Should().Be(HttpStatusCode.OK);
   }

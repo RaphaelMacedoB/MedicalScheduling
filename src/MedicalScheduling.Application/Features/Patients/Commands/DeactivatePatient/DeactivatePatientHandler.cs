@@ -26,7 +26,6 @@ public sealed class DeactivatePatientHandler : IRequestHandler<DeactivatePatient
     patient.Deactivate();
     _repository.Update(patient);
     await _uow.SaveChangesAsync(ct);
-    await _cache.RemoveAsync(CacheKeys.Patients.All, ct);
     await _cache.RemoveAsync(CacheKeys.Patients.ById(request.Id), ct);
 
     return Result.Success();

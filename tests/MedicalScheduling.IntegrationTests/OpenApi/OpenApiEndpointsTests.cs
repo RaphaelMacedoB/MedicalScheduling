@@ -1,6 +1,6 @@
 using System.Net;
 using MedicalScheduling.IntegrationTests.Common;
-using MedicalScheduling.Presentation.Constants;
+using MedicalScheduling.Presentation.WebAPI.Constants;
 
 namespace MedicalScheduling.IntegrationTests.OpenApi;
 

@@ -35,3 +35,28 @@ services:
 
     ports:
       - "6379:6379"
+
+  webapi:
+    build:
+      context: ..
+      dockerfile: src/MedicalScheduling.Presentation/WebAPI/Dockerfile
+    container_name: medical-webapi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=medical_scheduling;Username=postgres;Password=postgres
+      ConnectionStrings__Redis: redis:6379
+    ports:
+      - "5263:8080"
+    depends_on:
+      - postgres
+      - redis
+
+  frontend:
+    build:
+      context: ../src/MedicalScheduling.Presentation/Frontend
+      dockerfile: Dockerfile
+    container_name: medical-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - webapi

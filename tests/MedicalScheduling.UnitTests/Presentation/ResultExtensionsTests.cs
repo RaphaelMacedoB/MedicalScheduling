@@ -1,5 +1,5 @@
 using MedicalScheduling.Domain.Primitives;
-using MedicalScheduling.Presentation.Extensions;
+using MedicalScheduling.Presentation.WebAPI.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedicalScheduling.UnitTests.Presentation;

@@ -1,4 +1,5 @@
 using AutoMapper;
+using MedicalScheduling.Application.Features.Appointments.DTOs;
 using MedicalScheduling.Application.Features.Doctors.DTOs;
 using MedicalScheduling.Application.Features.Patients.DTOs;
 using MedicalScheduling.Application.Features.Specialities.DTOs;

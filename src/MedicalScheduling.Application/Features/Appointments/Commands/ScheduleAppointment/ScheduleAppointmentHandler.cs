@@ -2,6 +2,7 @@ namespace MedicalScheduling.Application.Features.Appointments.ScheduleAppointmen
 
 using AutoMapper;
 using MediatR;
+using MedicalScheduling.Application.Features.Appointments.DTOs;
 using MedicalScheduling.Domain;
 using MedicalScheduling.Domain.Primitives;
 using MedicalScheduling.Domain.Repositories;
