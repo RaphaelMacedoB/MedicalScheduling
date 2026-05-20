@@ -9,7 +9,7 @@ public sealed class Doctor : Entity
   public string Crm { get; private set; } = null!;
   public Email Email { get; private set; } = null!;
   public PhoneNumber Phone { get; private set; } = null!;
-  public Guid SpecialtyId { get; private set; }
+  public Guid SpecialityId { get; private set; }
   public Speciality Speciality { get; private set; } = null!;
   public bool IsActive { get; private set; }
 
@@ -18,13 +18,13 @@ public sealed class Doctor : Entity
 
   private Doctor() { } // EF Core
 
-  private Doctor(string name, string crm, Email email, PhoneNumber phone, Guid specialtyId)
+  private Doctor(string name, string crm, Email email, PhoneNumber phone, Guid specialityId)
   {
     Name = name;
     Crm = crm;
     Email = email;
     Phone = phone;
-    SpecialtyId = specialtyId;
+    SpecialityId = specialityId;
     IsActive = true;
   }
 
