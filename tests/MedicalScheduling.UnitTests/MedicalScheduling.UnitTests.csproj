@@ -9,8 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="coverlet.collector" Version="6.0.4" />
     <PackageReference Include="FluentAssertions" Version="8.10.0" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -19,11 +21,14 @@
 
   <ItemGroup>
     <Using Include="Xunit" />
+    <Using Include="FluentAssertions" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\MedicalScheduling.Domain\MedicalScheduling.Domain.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.8" />
     <ProjectReference Include="..\..\src\MedicalScheduling.Application\MedicalScheduling.Application.csproj" />
+    <ProjectReference Include="..\..\src\MedicalScheduling.Domain\MedicalScheduling.Domain.csproj" />
+    <ProjectReference Include="..\..\src\MedicalScheduling.Presentation\MedicalScheduling.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

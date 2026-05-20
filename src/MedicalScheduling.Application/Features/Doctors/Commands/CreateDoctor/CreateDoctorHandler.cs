@@ -4,8 +4,6 @@ using MedicalScheduling.Application.Features.Doctors.DTOs;
 using MedicalScheduling.Domain;
 using MedicalScheduling.Domain.Primitives;
 using MedicalScheduling.Domain.Repositories;
-using MedicalScheduling.Infrastructure;
-
 namespace MedicalScheduling.Application.Features.Doctors.Commands.CreateDoctor;
 
 public sealed class CreateDoctorHandler : IRequestHandler<CreateDoctorCommand, Result<DoctorDto>>
@@ -29,8 +27,8 @@ public sealed class CreateDoctorHandler : IRequestHandler<CreateDoctorCommand, R
 
   public async Task<Result<DoctorDto>> Handle(CreateDoctorCommand request, CancellationToken ct)
   {
-    var specialtyExists = await _specialityRepository.GetByIdAsync(request.SpecialityId, ct);
-    if (specialtyExists is null)
+    var specialityExists = await _specialityRepository.GetByIdAsync(request.SpecialityId, ct);
+    if (specialityExists is null)
       return Result.Failure<DoctorDto>(DomainErrors.Speciality.NotFound);
 
     var crmExists = await _doctorRepository.ExistsByCrmAsync(request.Crm, ct);

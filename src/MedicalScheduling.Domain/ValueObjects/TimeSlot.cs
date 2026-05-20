@@ -4,8 +4,10 @@ namespace MedicalScheduling.Domain.ValueObjects;
 
 public sealed class TimeSlot : ValueObject
 {
-  public DateTime Start { get; }
-  public DateTime End { get; }
+  public DateTime Start { get; private set; }
+  public DateTime End { get; private set; }
+
+  private TimeSlot() { }
 
   private TimeSlot(DateTime start, DateTime end)
   {
@@ -23,6 +25,8 @@ public sealed class TimeSlot : ValueObject
 
     return Result.Success(new TimeSlot(start, end));
   }
+
+  internal static TimeSlot FromPersistence(DateTime start, DateTime end) => new(start, end);
 
   public bool OverlapsWith(TimeSlot other) => Start < other.End && End > other.Start;
 

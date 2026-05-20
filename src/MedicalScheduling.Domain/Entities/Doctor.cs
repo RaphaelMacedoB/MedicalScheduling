@@ -33,7 +33,7 @@ public sealed class Doctor : Entity
       string crm,
       string email,
       string phone,
-      Guid specialtyId)
+      Guid specialityId)
   {
     if (string.IsNullOrWhiteSpace(name))
       return Result.Failure<Doctor>(new Error("Doctor.InvalidName", "Nome inválido"));
@@ -47,7 +47,7 @@ public sealed class Doctor : Entity
     var phoneResult = PhoneNumber.Create(phone);
     if (phoneResult.IsFailure) return Result.Failure<Doctor>(phoneResult.Error);
 
-    return Result.Success(new Doctor(name.Trim(), crm.Trim(), emailResult.Value, phoneResult.Value, specialtyId));
+    return Result.Success(new Doctor(name.Trim(), crm.Trim(), emailResult.Value, phoneResult.Value, specialityId));
   }
 
   public void Deactivate()

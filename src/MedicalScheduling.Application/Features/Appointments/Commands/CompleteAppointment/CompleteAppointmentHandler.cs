@@ -1,8 +1,6 @@
 using MediatR;
 using MedicalScheduling.Domain.Primitives;
 using MedicalScheduling.Domain.Repositories;
-using MedicalScheduling.Infrastructure;
-
 namespace MedicalScheduling.Application.Features.Appointments.CompleteAppointment;
 
 public sealed class CompleteAppointmentHandler : IRequestHandler<CompleteAppointmentCommand, Result>

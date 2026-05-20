@@ -1,8 +1,6 @@
 using MediatR;
 using MedicalScheduling.Domain.Primitives;
 using MedicalScheduling.Domain.Repositories;
-using MedicalScheduling.Infrastructure;
-
 namespace MedicalScheduling.Application.Features.Doctors.Commands.DeactivateDoctor;
 
 public sealed class DeactivateDoctorHandler : IRequestHandler<DeactivateDoctorCommand, Result>

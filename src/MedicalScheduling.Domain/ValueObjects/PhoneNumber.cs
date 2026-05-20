@@ -19,6 +19,8 @@ public sealed class PhoneNumber : ValueObject
     return Result.Success(new PhoneNumber(digits));
   }
 
+  internal static PhoneNumber FromPersistence(string value) => new(value);
+
   protected override IEnumerable<object> GetEqualityComponents()
   {
     yield return Value;

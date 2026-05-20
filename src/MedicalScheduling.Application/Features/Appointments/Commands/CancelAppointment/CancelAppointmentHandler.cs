@@ -1,8 +1,6 @@
 using MediatR;
 using MedicalScheduling.Domain.Primitives;
 using MedicalScheduling.Domain.Repositories;
-using MedicalScheduling.Infrastructure;
-
 namespace MedicalScheduling.Application.Features.Appointments.CancelAppointment;
 
 public sealed class CancelAppointmentHandler : IRequestHandler<CancelAppointmentCommand, Result>

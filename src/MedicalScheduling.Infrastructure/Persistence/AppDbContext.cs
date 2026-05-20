@@ -1,7 +1,7 @@
 using MedicalScheduling.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace MedicalScheduling.Infrastructure.Persistence.Repositories;
+namespace MedicalScheduling.Infrastructure.Persistence;
 
 public sealed class AppDbContext : DbContext
 {

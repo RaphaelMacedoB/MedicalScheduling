@@ -1,4 +1,5 @@
 using MedicalScheduling.Domain.Repositories;
+using MedicalScheduling.Infrastructure.Persistence;
 using MedicalScheduling.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

@@ -19,6 +19,8 @@ public sealed class Cpf : ValueObject
     return Result.Success(new Cpf(digits));
   }
 
+  internal static Cpf FromPersistence(string value) => new(value);
+
   private static bool IsValid(string cpf)
   {
     if (cpf.Length != 11 || cpf.Distinct().Count() == 1)

@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MedicalScheduling.Domain\MedicalScheduling.Domain.csproj" />
-    <ProjectReference Include="..\MedicalScheduling.Infrastructure\MedicalScheduling.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

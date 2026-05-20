@@ -20,6 +20,8 @@ public sealed class Email : ValueObject
     return Result.Success(new Email(email.ToLowerInvariant()));
   }
 
+  internal static Email FromPersistence(string value) => new(value.ToLowerInvariant());
+
   protected override IEnumerable<object> GetEqualityComponents()
   {
     yield return Value;

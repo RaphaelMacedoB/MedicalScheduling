@@ -4,7 +4,6 @@ using MedicalScheduling.Application.Features.Patients.DTOs;
 using MedicalScheduling.Domain;
 using MedicalScheduling.Domain.Primitives;
 using MedicalScheduling.Domain.Repositories;
-using MedicalScheduling.Infrastructure;
 
 namespace MedicalScheduling.Application.Features.Patients.Commands.CreatePatient;
 

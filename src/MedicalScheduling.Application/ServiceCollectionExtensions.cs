@@ -3,6 +3,7 @@ namespace MedicalScheduling.Application;
 using FluentValidation;
 using MediatR;
 using MedicalScheduling.Application.Behaviors;
+using MedicalScheduling.Application.Common.Mappings;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions

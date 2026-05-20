@@ -5,8 +5,6 @@ using MediatR;
 using MedicalScheduling.Domain;
 using MedicalScheduling.Domain.Primitives;
 using MedicalScheduling.Domain.Repositories;
-using MedicalScheduling.Infrastructure;
-
 public sealed class ScheduleAppointmentHandler : IRequestHandler<ScheduleAppointmentCommand, Result<AppointmentDto>>
 {
   private readonly IAppointmentRepository _appointmentRepository;

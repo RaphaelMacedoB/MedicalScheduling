@@ -12,6 +12,8 @@
     <PackageReference Include="coverlet.collector" Version="6.0.4" />
     <PackageReference Include="FluentAssertions" Version="8.10.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="Testcontainers.PostgreSql" Version="4.12.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -20,9 +22,12 @@
 
   <ItemGroup>
     <Using Include="Xunit" />
+    <Using Include="FluentAssertions" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\MedicalScheduling.Application\MedicalScheduling.Application.csproj" />
+    <ProjectReference Include="..\..\src\MedicalScheduling.Infrastructure\MedicalScheduling.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\MedicalScheduling.Presentation\MedicalScheduling.Presentation.csproj" />
   </ItemGroup>
 

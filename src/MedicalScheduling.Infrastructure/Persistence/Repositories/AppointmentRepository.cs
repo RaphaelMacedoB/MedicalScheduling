@@ -1,6 +1,7 @@
 using MedicalScheduling.Domain;
 using MedicalScheduling.Domain.Enums;
 using MedicalScheduling.Domain.Repositories;
+using MedicalScheduling.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicalScheduling.Infrastructure.Persistence.Repositories;
@@ -15,16 +16,23 @@ public sealed class AppointmentRepository : IAppointmentRepository
         await _context.Appointments
             .Include(a => a.Patient)
             .Include(a => a.Doctor)
+                .ThenInclude(d => d.Speciality)
             .FirstOrDefaultAsync(a => a.Id == id, ct);
 
     public async Task<IEnumerable<Appointment>> GetByDoctorAsync(Guid doctorId, CancellationToken ct = default) =>
         await _context.Appointments
+            .Include(a => a.Patient)
+            .Include(a => a.Doctor)
+                .ThenInclude(d => d.Speciality)
             .Where(a => a.DoctorId == doctorId)
             .OrderBy(a => a.TimeSlot.Start)
             .ToListAsync(ct);
 
     public async Task<IEnumerable<Appointment>> GetByPatientAsync(Guid patientId, CancellationToken ct = default) =>
         await _context.Appointments
+            .Include(a => a.Patient)
+            .Include(a => a.Doctor)
+                .ThenInclude(d => d.Speciality)
             .Where(a => a.PatientId == patientId)
             .OrderBy(a => a.TimeSlot.Start)
             .ToListAsync(ct);

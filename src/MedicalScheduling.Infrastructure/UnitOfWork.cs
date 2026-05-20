@@ -1,6 +1,7 @@
-namespace MedicalScheduling.Infrastructure;
+using MedicalScheduling.Domain.Repositories;
+using MedicalScheduling.Infrastructure.Persistence;
 
-using MedicalScheduling.Infrastructure.Persistence.Repositories;
+namespace MedicalScheduling.Infrastructure;
 
 public sealed class UnitOfWork : IUnitOfWork
 {
