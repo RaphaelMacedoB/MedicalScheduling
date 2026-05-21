@@ -1,56 +1,61 @@
-import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
+import { getApiErrorMessage } from '../api/client';
 import { fetchDoctors, fetchPatients } from '../api/pagedFetchers';
 
-export function useActivePatients() {
-  const [patients, setPatients] = useState([]);
+function useActiveList(fetcher, emptyErrorMessage) {
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const abortRef = useRef(null);
 
   useEffect(() => {
-    let cancelled = false;
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     (async () => {
       setLoading(true);
       setError(null);
       try {
-        const result = await fetchPatients({ page: 1, pageSize: 100, isActive: true });
-        if (!cancelled) setPatients(result.items);
+        const result = await fetcher(
+          { page: 1, pageSize: 100, isActive: true },
+          { signal: controller.signal },
+        );
+        if (!controller.signal.aborted) {
+          setItems(result.items);
+        }
       } catch (err) {
-        if (!cancelled) setError(err instanceof Error ? err.message : 'Erro ao carregar pacientes');
+        if (axios.isCancel(err)) return;
+        const message = getApiErrorMessage(err);
+        if (message && !controller.signal.aborted) {
+          setError(message || emptyErrorMessage);
+        }
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
-  return { patients, loading, error };
+    return () => abortRef.current?.abort();
+  }, [fetcher, emptyErrorMessage]);
+
+  return { items, loading, error };
+}
+
+export function useActivePatients() {
+  const { items, loading, error } = useActiveList(
+    fetchPatients,
+    'Erro ao carregar pacientes',
+  );
+  return { patients: items, loading, error };
 }
 
 export function useActiveDoctors() {
-  const [doctors, setDoctors] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const result = await fetchDoctors({ page: 1, pageSize: 100, isActive: true });
-        if (!cancelled) setDoctors(result.items);
-      } catch (err) {
-        if (!cancelled) setError(err instanceof Error ? err.message : 'Erro ao carregar médicos');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  return { doctors, loading, error };
+  const { items, loading, error } = useActiveList(
+    fetchDoctors,
+    'Erro ao carregar médicos',
+  );
+  return { doctors: items, loading, error };
 }

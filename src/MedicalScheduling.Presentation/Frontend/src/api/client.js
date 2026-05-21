@@ -1,39 +1,57 @@
+import axios from 'axios';
+
 export const API_BASE = import.meta.env.VITE_API_URL ?? '/api/v1';
 
-function buildQuery(params) {
-  const searchParams = new URLSearchParams();
+export const http = axios.create({
+  baseURL: API_BASE,
+  headers: { 'Content-Type': 'application/json' },
+});
+
+function cleanParams(params) {
+  const result = {};
   for (const [key, value] of Object.entries(params)) {
     if (value === undefined || value === null || value === '') continue;
-    searchParams.set(key, String(value));
+    result[key] = value;
   }
-  const query = searchParams.toString();
-  return query ? `?${query}` : '';
+  return result;
 }
 
-async function handleResponse(response) {
-  if (response.ok) {
+export function getApiErrorMessage(err) {
+  if (axios.isCancel(err)) return null;
+  if (err instanceof Error) return err.message;
+  return 'Erro desconhecido';
+}
+
+http.interceptors.response.use(
+  (response) => {
     if (response.status === 204) return undefined;
-    return response.json();
-  }
+    return response.data;
+  },
+  (error) => {
+    if (axios.isCancel(error)) {
+      return Promise.reject(error);
+    }
+    const data = error.response?.data;
+    const message = data?.message || data?.code || error.message || 'Erro na requisição';
+    return Promise.reject(new Error(message));
+  },
+);
 
-  let error = { code: 'Unknown', message: response.statusText };
-  try {
-    error = await response.json();
-  } catch {
-    /* empty body */
-  }
-
-  throw new Error(error.message || error.code);
+export async function apiGet(path, config = {}) {
+  return http.get(path, config);
 }
 
-export async function apiRequest(path, init = {}) {
-  const response = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...init.headers },
-    ...init,
+export async function apiPost(path, data, config = {}) {
+  return http.post(path, data, config);
+}
+
+export async function apiPatch(path, data, config = {}) {
+  return http.patch(path, data, config);
+}
+
+export async function getPaged(path, params = {}, config = {}) {
+  return http.get(path, {
+    params: cleanParams(params),
+    ...config,
   });
-  return handleResponse(response);
-}
-
-export async function getPaged(path, params = {}) {
-  return apiRequest(`${path}${buildQuery(params)}`);
 }

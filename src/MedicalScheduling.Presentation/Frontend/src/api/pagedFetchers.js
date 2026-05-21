@@ -1,9 +1,9 @@
 import { getPaged } from './client';
 
-export const fetchPatients = (params) => getPaged('/patients', params);
+export const fetchPatients = (params, config) => getPaged('/patients', params, config);
 
-export const fetchDoctors = (params) => getPaged('/doctors', params);
+export const fetchDoctors = (params, config) => getPaged('/doctors', params, config);
 
-export const fetchSpecialities = (params) => getPaged('/specialities', params);
+export const fetchSpecialities = (params, config) => getPaged('/specialities', params, config);
 
-export const fetchAppointments = (params) => getPaged('/appointments', params);
+export const fetchAppointments = (params, config) => getPaged('/appointments', params, config);

@@ -1,8 +1,11 @@
+import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { getApiErrorMessage } from '../api/client';
 
 export function usePagedList({ fetcher, initialPageSize = 10 }) {
   const fetcherRef = useRef(fetcher);
   fetcherRef.current = fetcher;
+  const abortRef = useRef(null);
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,28 +19,44 @@ export function usePagedList({ fetcher, initialPageSize = 10 }) {
   const [filters, setFilters] = useState({});
 
   const load = useCallback(async () => {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     setLoading(true);
     setError(null);
     try {
-      const result = await fetcherRef.current({
-        page,
-        pageSize,
-        search: appliedSearch || undefined,
-        sortBy,
-        sortDirection,
-        ...filters,
-      });
-      setData(result);
+      const result = await fetcherRef.current(
+        {
+          page,
+          pageSize,
+          search: appliedSearch || undefined,
+          sortBy,
+          sortDirection,
+          ...filters,
+        },
+        { signal: controller.signal },
+      );
+      if (!controller.signal.aborted) {
+        setData(result);
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load data');
-      setData(null);
+      if (axios.isCancel(err)) return;
+      const message = getApiErrorMessage(err);
+      if (message && !controller.signal.aborted) {
+        setError(message);
+        setData(null);
+      }
     } finally {
-      setLoading(false);
+      if (!controller.signal.aborted) {
+        setLoading(false);
+      }
     }
   }, [page, pageSize, appliedSearch, sortBy, sortDirection, filters]);
 
   useEffect(() => {
     void load();
+    return () => abortRef.current?.abort();
   }, [load]);
 
   const setFilter = useCallback((key, value) => {
