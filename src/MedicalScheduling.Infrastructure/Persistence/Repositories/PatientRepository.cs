@@ -78,8 +78,9 @@ public sealed class PatientRepository : IPatientRepository
     return (sortBy?.ToLowerInvariant()) switch
     {
       "name" => sortDescending ? query.OrderByDescending(p => p.Name) : query.OrderBy(p => p.Name),
-      "email" => sortDescending ? query.OrderByDescending(p => p.Email.Value) : query.OrderBy(p => p.Email.Value),
-      "cpf" => sortDescending ? query.OrderByDescending(p => p.Cpf.Value) : query.OrderBy(p => p.Cpf.Value),
+      "email" => sortDescending ? query.OrderByDescending(p => p.Email) : query.OrderBy(p => p.Email),
+      "cpf" => sortDescending ? query.OrderByDescending(p => p.Cpf) : query.OrderBy(p => p.Cpf),
+      "phone" => sortDescending ? query.OrderByDescending(p => p.Phone) : query.OrderBy(p => p.Phone),
       "birthdate" => sortDescending ? query.OrderByDescending(p => p.BirthDate) : query.OrderBy(p => p.BirthDate),
       "createdat" => sortDescending ? query.OrderByDescending(p => p.CreatedAt) : query.OrderBy(p => p.CreatedAt),
       "isactive" => sortDescending ? query.OrderByDescending(p => p.IsActive) : query.OrderBy(p => p.IsActive),

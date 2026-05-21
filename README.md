@@ -78,7 +78,7 @@ Contains:
 
 Contains:
 - **WebAPI** (`src/MedicalScheduling.Presentation/WebAPI`) — ASP.NET Core controllers, Swagger, CORS
-- **Frontend** (`src/MedicalScheduling.Presentation/Frontend`) — React + Vite SPA with paginated lists and filters
+- **Frontend** (`src/MedicalScheduling.Presentation/Frontend`) — React (JavaScript) + Vite SPA with paginated lists and filters
 
 ---
 
